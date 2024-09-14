@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex Optimizada</title>
+  <!-- Importamos la fuente desde Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Icono de la página -->
+  <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+  <style>
+    /* Estilos Generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background-color: #121212;
+      color: #fff;
+    }
+
+    header {
+      background-color: #1E1E1E;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .generation-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .generation-btn {
+      background-color: #ffcc00;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .generation-btn:hover {
+      background-color: #f2a900;
+    }
+
+    #search-bar {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Indicador de carga */
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 5px solid #3498db;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Estilos de la Tarjeta de Pokémon */
+    .pokemon-card {
+      width: 250px;
+      margin: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s;
+      background-color: #1E1E1E;
+      position: relative;
+    }
+
+    .pokemon-card:hover {
+      transform: scale(1.05);
+    }
+
+    .pokemon-card img {
+      width: 100%;
+      height: auto;
+      background-color: #f2f2f2;
+      cursor: pointer;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .pokemon-card img.shiny {
+      display: none;
+    }
+
+    /* Animación suave para el slider */
+    .pokemon-card img.fade-out {
+      opacity: 0;
+    }
+
+    .pokemon-card img.fade-in {
+      opacity: 1;
+    }
+
+    /* Botones del slider - circulares y debajo de la imagen */
+    .slider-btn {
+      position: absolute;
+      bottom: 10px;
+      background-color: inherit; /* El mismo color que el fondo de la tarjeta */
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      font-size: 18px;
+      color: white; /* Color del símbolo en blanco */
+      border-radius: 50%; /* Hacer los botones circulares */
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .slider-btn.left {
+      left: 20px;
+    }
+
+    .slider-btn.right {
+      right: 20px;
+    }
+
+    .slider-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2); /* Hover effect para mejor interacción */
+    }
+
+    .pokemon-info {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .pokemon-info h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      text-transform: capitalize;
+    }
+
+    .pokemon-info span {
+      font-size: 16px;
+      color: white; /* Número de Pokémon en blanco */
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .pokemon-types {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .type {
+      background-color: white; /* Fondo blanco */
+      border-radius: 3px;
+      padding: 5px 10px;
+      margin: 2px;
+      font-size: 12px;
+      text-transform: capitalize;
+      color: inherit; /* El color de la tarjeta */
+    }
+
+    /* Mensaje para cuando no se encuentran Pokémon */
+    .no-results {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 28px;
+      }
+
+      .pokemon-card {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pokédex Optimizada</h1>
+    <input type="text" id="search-bar" placeholder="Buscar Pokémon...">
+  </header>
+
+  <div class="generation-buttons">
+    <button class="generation-btn" onclick="loadGeneration(1)">Gen 1</button>
+    <button class="generation-btn" onclick="loadGeneration(2)">Gen 2</button>
+    <button class="generation-btn" onclick="loadGeneration(3)">Gen 3</button>
+    <button class="generation-btn" onclick="loadGeneration(4)">Gen 4</button>
+    <button class="generation-btn" onclick="loadGeneration(5)">Gen 5</button>
+    <button class="generation-btn" onclick="loadGeneration(6)">Gen 6</button>
+    <button class="generation-btn" onclick="loadGeneration(7)">Gen 7</button>
+    <button class="generation-btn" onclick="loadGeneration(8)">Gen 8</button>
+    <button class="generation-btn" onclick="loadGeneration(9)">Gen 9</button>
+  </div>
+
+  <main id="pokemon-container"></main>
+  <div class="loader" id="loader" style="display:none;"></div>
+  <div id="no-results" class="no-results" style="display:none;">No se encontraron Pokémon</div>
+
+  <script>
+    const pokemonContainer = document.getElementById('pokemon-container');
+    const loader = document.getElementById('loader');
+    const noResults = document.getElementById('no-results');
+    const searchBar = document.getElementById('search-bar');
+    let allPokemons = []; // Guardará todos los Pokémon cargados de la generación actual
+
+    const typeColors = {
+      normal: '#A8A77A',
+      fire: '#EE8130',
+      water: '#6390F0',
+      electric: '#F7D02C',
+      grass: '#7AC74C',
+      ice: '#96D9D6',
+      fighting: '#C22E28',
+      poison: '#A33EA1',
+      ground: '#E2BF65',
+      flying: '#A98FF3',
+      psychic: '#F95587',
+      bug: '#A6B91A',
+      rock: '#B6A136',
+      ghost: '#735797',
+      dragon: '#6F35FC',
+      dark: '#705746',
+      steel: '#B7B7CE',
+      fairy: '#D685AD'
+    };
+
+    // Mostrar el loader mientras se cargan los Pokémon
+    const showLoader = () => {
+      loader.style.display = 'block';
+    };
+
+    const hideLoader = () => {
+      loader.style.display = 'none';
+    };
+
+    // Cargar Pokémon por Generación
+    const loadGeneration = async (gen) => {
+      pokemonContainer.innerHTML = ''; // Limpiar el contenedor
+      showLoader();
+      allPokemons = []; // Resetear la lista de Pokémon cargados
+      noResults.style.display = 'none';
+
+      // Cargar todos los Pokémon de una generación específica
+      const response = await fetch(`https://pokeapi.co/api/v2/generation/${gen}`);
+      const data = await response.json();
+      const pokemonSpecies = data.pokemon_species;
+
+      pokemonSpecies.sort((a, b) => {
+        const idA = parseInt(a.url.split("/")[6]);
+        const idB = parseInt(b.url.split("/")[6]);
+        return idA - idB;
+      });
+
+      for (const species of pokemonSpecies) {
+        const pokemonData = await fetchPokemonData(species.url);
+        allPokemons.push(pokemonData); // Guardamos cada Pokémon cargado
+        createPokemonCard(pokemonData); // Creamos la tarjeta de Pokémon
+      }
+
+      hideLoader();
+    };
+
+    // Obtener datos del Pokémon
+    const fetchPokemonData = async (url) => {
+      const speciesResponse = await fetch(url);
+      const speciesData = await speciesResponse.json();
+      const pokemonResponse = await fetch(speciesData.varieties[0].pokemon.url);
+      const pokemonData = await pokemonResponse.json();
+      return pokemonData;
+    };
+
+    // Crear la tarjeta de cada Pokémon con slider de imagen
+    const createPokemonCard = (pokemon) => {
+      const card = document.createElement('div');
+      card.classList.add('pokemon-card');
+
+      const primaryType = pokemon.types[0].type.name;
+      const color1 = typeColors[primaryType];
+      const color2 = pokemon.types[1] ? typeColors[pokemon.types[1].type.name] : color1;
+
+      card.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+
+      const spriteContainer = document.createElement('div');
+      spriteContainer.classList.add('sprite-container');
+      spriteContainer.style.position = 'relative';
+
+      const sprite = document.createElement('img');
+      sprite.src = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+      sprite.loading = "lazy"; // Lazy load para optimizar la carga
+      sprite.alt = `${pokemon.name} image`;
+
+      const altImage = document.createElement('img');
+      altImage.src = pokemon.sprites.other['home'].front_shiny || sprite.src;
+      altImage.style.display = 'none';
+      altImage.loading = "lazy"; // Lazy load para optimizar
+      altImage.alt = `${pokemon.name} shiny version`;
+
+      // Botones de navegación para deslizar entre las imágenes, ahora circulares y abajo
+      const leftButton = document.createElement('button');
+      leftButton.classList.add('slider-btn', 'left');
+      leftButton.innerHTML = '&#60;'; // usando entidades HTML para <
+      leftButton.style.backgroundColor = color1;
+
+      const rightButton = document.createElement('button');
+      rightButton.classList.add('slider-btn', 'right');
+      rightButton.innerHTML = '&#62;'; // usando entidades HTML para >
+      rightButton.style.backgroundColor = color1;
+
+      // Evento para cambiar entre imágenes cuando se hace clic en los botones
+      let isMainImage = true;
+      const switchImage = () => {
+        sprite.classList.add('fade-out');
+        altImage.classList.add('fade-in');
+        setTimeout(() => {
+          sprite.style.display = isMainImage ? 'none' : 'block';
+          altImage.style.display = isMainImage ? 'block' : 'none';
+          isMainImage = !isMainImage;
+          sprite.classList.remove('fade-out');
+          altImage.classList.remove('fade-in');
+        }, 300); // Duración de la animación de transición
+      };
+
+      leftButton.addEventListener('click', switchImage);
+      rightButton.addEventListener('click', switchImage);
+
+      spriteContainer.appendChild(sprite);
+      spriteContainer.appendChild(altImage);
+      spriteContainer.appendChild(leftButton);
+      spriteContainer.appendChild(rightButton);
+
+      const info = document.createElement('div');
+      info.classList.add('pokemon-info');
+
+      const name = document.createElement('h2');
+      name.textContent = pokemon.name;
+
+      const number = document.createElement('span');
+      number.textContent = `#${pokemon.id.toString().padStart(3, '0')}`;
+
+      const types = document.createElement('div');
+      types.classList.add('pokemon-types');
+
+      pokemon.types.forEach(typeInfo => {
+        const type = document.createElement('span');
+        type.classList.add('type');
+        type.textContent = typeInfo.type.name;
+        type.style.color = color1; // El color de la tipografía será el color primario de la card
+        types.appendChild(type);
+      });
+
+      info.appendChild(name);
+      info.appendChild(number);
+      info.appendChild(types);
+      card.appendChild(spriteContainer);
+      card.appendChild(info);
+      pokemonContainer.appendChild(card);
+    };
+
+    // Función para buscar Pokémon
+    searchBar.addEventListener('keyup', (e) => {
+      const searchString = e.target.value.toLowerCase();
+      const filteredPokemons = allPokemons.filter(pokemon => {
+        return pokemon.name.toLowerCase().includes(searchString);
+      });
+      pokemonContainer.innerHTML = ''; // Limpiar los resultados anteriores
+      if (filteredPokemons.length === 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+        filteredPokemons.forEach(pokemon => {
+          createPokemonCard(pokemon); // Mostrar solo los resultados filtrados
+        });
+      }
+    });
+
+    // Cargar la generación 1 por defecto
+    loadGeneration(1);
+  </script>
+</body>
+</html>
