@@ -16,7 +16,6 @@
       --title-color: #ffcc00;
       --accent-color: #ff5733;
       --link-color: #3498db;
-      --hover-color: #ff8c00;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -29,21 +28,15 @@
       background-color: var(--header-bg);
       padding: 20px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
     h1 {
       font-family: 'Press Start 2P', cursive;
       font-size: 2rem;
       color: var(--title-color);
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
     .credit {
       font-size: 0.9rem;
       margin-top: 10px;
-      opacity: 0.7;
     }
     main {
       padding: 20px;
@@ -52,22 +45,15 @@
     }
     .quest-category {
       margin-bottom: 40px;
-      background-color: rgba(255,255,255,0.05);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     .quest-category h2 {
       font-size: 1.75rem;
       margin-bottom: 10px;
       color: var(--accent-color);
-      border-bottom: 2px solid var(--accent-color);
-      padding-bottom: 10px;
     }
     .quest-category p.description {
       font-size: 1rem;
       margin-bottom: 20px;
-      font-style: italic;
     }
     .quest-card {
       background-color: var(--card-bg);
@@ -75,11 +61,6 @@
       margin-bottom: 20px;
       padding: 20px;
       border-radius: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .quest-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     .quest-card h3 {
       font-size: 1.5rem;
@@ -92,7 +73,6 @@
       height: 50px;
       margin-right: 10px;
       object-fit: contain;
-      filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
     }
     .quest-card p {
       font-size: 1rem;
@@ -107,13 +87,6 @@
       width: 200px;
       margin: 10px;
       text-align: center;
-      background-color: rgba(255,255,255,0.05);
-      border-radius: 10px;
-      padding: 10px;
-      transition: transform 0.3s ease;
-    }
-    .pokemon-item:hover {
-      transform: scale(1.05);
     }
     .pokemon-item img {
       width: 100px;
@@ -122,26 +95,20 @@
       background-color: #f2f2f2;
       margin-bottom: 10px;
       object-fit: contain;
-      box-shadow: 0 0 10px rgba(255,204,0,0.5);
     }
     .pokemon-item p {
       font-size: 0.9rem;
     }
     a.back-link {
-      display: inline-block;
+      display: block;
       text-align: center;
       margin-bottom: 20px;
       color: var(--link-color);
       text-decoration: none;
       font-size: 1rem;
-      padding: 10px 20px;
-      background-color: rgba(52, 152, 219, 0.1);
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
     a.back-link:hover {
-      background-color: var(--link-color);
-      color: var(--bg-color);
+      text-decoration: underline;
     }
     @media (max-width: 768px) {
       .pokemon-list {
@@ -152,24 +119,6 @@
         width: 100%;
       }
     }
-    /* Añadir animación de carga */
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-size: 1.5rem;
-      color: var(--title-color);
-    }
-    .loading::after {
-      content: "Cargando...";
-      animation: loading 1.5s infinite;
-    }
-    @keyframes loading {
-      0% { content: "Cargando."; }
-      33% { content: "Cargando.."; }
-      66% { content: "Cargando..."; }
-    }
   </style>
 </head>
 <body>
@@ -179,27 +128,200 @@
   </header>
 
   <main id="quests-container">
-    <div class="loading"></div>
+    <!-- El contenido de las quests se generará aquí -->
   </main>
 
   <script>
     const questsData = [
-      // Aquí incluiré todas las quests completas, como en el código anterior
-      // ...
+      {
+        title: "Objetos Evolutivos",
+        description: "Daremos inicio con los objetos para evolucionar a ciertas especies de Pokémon los cuales puedes conseguir al girar las Poképaradas (la probabilidad es muy baja), como recompensa de las tareas de investigación (la probabilidad no es muy alta) o en eventos temporales.",
+        quests: [
+          {
+            item: "Piedra Solar",
+            description: "Permite evolucionar a algunos Pokémon de tipo Planta.",
+            pokemons: [
+              { name: "Gloom", evolvesTo: "Bellossom", candies: 100 },
+              { name: "Sunkern", evolvesTo: "Sunflora", candies: 50 },
+              { name: "Cottonee", evolvesTo: "Whimsicott", candies: 50 },
+              { name: "Petilil", evolvesTo: "Lilligant", candies: 50 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sun-stone.png",
+          },
+          {
+            item: "Escama Dragón",
+            description: "Este objeto evolutivo, como su nombre lo dice, está dedicado a los Pokémon de tipo Dragón.",
+            pokemons: [
+              { name: "Seadra", evolvesTo: "Kingdra", candies: 100 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dragon-scale.png",
+          },
+          {
+            item: "Roca del Rey",
+            description: "Esta piedra evolutiva está relacionada a los Pokémon de tipo Agua.",
+            pokemons: [
+              { name: "Poliwhirl", evolvesTo: "Politoed", candies: 100 },
+              { name: "Slowpoke", evolvesTo: "Slowking", candies: 50 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/kings-rock.png",
+          },
+          {
+            item: "Mejora",
+            description: "Este objeto te permite evolucionar a Pokémon de tipo Normal.",
+            pokemons: [
+              { name: "Porygon", evolvesTo: "Porygon2", candies: 25 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/up-grade.png",
+          },
+          {
+            item: "Revestimiento Metálico",
+            description: "Este objeto te permite evolucionar a Pokémon de tipo Acero.",
+            pokemons: [
+              { name: "Onix", evolvesTo: "Steelix", candies: 50 },
+              { name: "Scyther", evolvesTo: "Scizor", candies: 50 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/metal-coat.png",
+          },
+          {
+            item: "Piedra Sinnoh",
+            description: "Esta piedra te permite evolucionar a Pokémon que se encuentran en esta región.",
+            pokemons: [
+              { name: "Lickitung", evolvesTo: "Lickilicky", candies: 100 },
+              { name: "Rhydon", evolvesTo: "Rhyperior", candies: 100 },
+              { name: "Tangela", evolvesTo: "Tangrowth", candies: 100 },
+              { name: "Electabuzz", evolvesTo: "Electivire", candies: 100 },
+              { name: "Magmar", evolvesTo: "Magmortar", candies: 100 },
+              { name: "Togetic", evolvesTo: "Togekiss", candies: 100 },
+              { name: "Aipom", evolvesTo: "Ambipom", candies: 100 },
+              { name: "Yanma", evolvesTo: "Yanmega", candies: 100 },
+              { name: "Murkrow", evolvesTo: "Honchkrow", candies: 100 },
+              { name: "Misdreavus", evolvesTo: "Mismagius", candies: 100 },
+              { name: "Gligar", evolvesTo: "Gliscor", candies: 100 },
+              { name: "Sneasel", evolvesTo: "Weavile", candies: 100 },
+              { name: "Piloswine", evolvesTo: "Mamoswine", candies: 100 },
+              { name: "Porygon2", evolvesTo: "Porygon-Z", candies: 100 },
+              { name: "Kirlia", evolvesTo: "Gallade", candies: 100 },
+              { name: "Roselia", evolvesTo: "Roserade", candies: 100 },
+              { name: "Dusclops", evolvesTo: "Dusknoir", candies: 100 },
+              { name: "Snorunt", evolvesTo: "Froslass", candies: 100 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sinnoh-stone.png",
+          },
+          {
+            item: "Piedra Teselia",
+            description: "Esta piedra te permite evolucionar a Pokémon que se encuentran en esta región.",
+            pokemons: [
+              { name: "Pansear", evolvesTo: "Simisear", candies: 50 },
+              { name: "Panpour", evolvesTo: "Simipour", candies: 50 },
+              { name: "Pansage", evolvesTo: "Simisage", candies: 50 },
+              { name: "Munna", evolvesTo: "Musharna", candies: 50 },
+              { name: "Minccino", evolvesTo: "Cinccino", candies: 50 },
+              { name: "Eelektrik", evolvesTo: "Eelektross", candies: 100 },
+              { name: "Lampent", evolvesTo: "Chandelure", candies: 100 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/unova-stone.png",
+          },
+        ],
+      },
+      {
+        title: "Módulos Cebo",
+        description: "Algunos Pokémon requieren algún tipo de Módulo Cebo para evolucionar. En caso de que no cuentes con alguno de estos módulos, cuando veas uno, ¡corre y aprovéchalo! Estos módulos cebo los conseguirás en la Tienda por un precio de 200 Pokémonedas, o como recompensa en algunas tareas de investigación especial.",
+        quests: [
+          {
+            item: "Módulo Cebo Glaciar",
+            description: "Sirve para atraer a Pokémon de tipo Hielo y Agua.",
+            pokemons: [
+              { name: "Eevee", evolvesTo: "Glaceon", candies: 25 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/glacier-mail.png",
+          },
+          {
+            item: "Módulo Cebo Musgoso",
+            description: "Sirve para atraer a Pokémon de tipo Bicho, Planta y Veneno.",
+            pokemons: [
+              { name: "Eevee", evolvesTo: "Leafeon", candies: 25 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/wood-mail.png",
+          },
+          {
+            item: "Módulo Cebo Magnético",
+            description: "Sirve para atraer a Pokémon de tipo Eléctrico, Acero y Roca.",
+            pokemons: [
+              { name: "Magneton", evolvesTo: "Magnezone", candies: 100 },
+              { name: "Nosepass", evolvesTo: "Probopass", candies: 50 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/magnet.png",
+          },
+          {
+            item: "Módulo Cebo Lluvioso",
+            description: "Sirve para atraer a Pokémon de tipo Agua, Eléctrico y Bicho.",
+            pokemons: [
+              { name: "Sliggoo", evolvesTo: "Goodra", candies: 100 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/hydro-mail.png",
+          },
+        ],
+      },
+      {
+        title: "Evolución mediante intercambio",
+        description: "Emulando a la saga principal, el intercambio resulta una herramienta muy interesante para evolucionar a ciertos Pokémon. No evolucionan en cuanto se intercambian, pero el número de caramelos que requerirían normalmente se reduce a cero, por lo que solo necesitamos una pequeña cantidad de Polvos Estelares para hacer efectiva la evolución, lo que es prácticamente un regalo.",
+        quests: [
+          {
+            item: "Intercambio",
+            description: "Los Pokémon que pueden evolucionar al ser intercambiados son los siguientes:",
+            pokemons: [
+              { name: "Kadabra", evolvesTo: "Alakazam", candies: 0 },
+              { name: "Machoke", evolvesTo: "Machamp", candies: 0 },
+              { name: "Graveler", evolvesTo: "Golem", candies: 0 },
+              { name: "Haunter", evolvesTo: "Gengar", candies: 0 },
+              { name: "Boldore", evolvesTo: "Gigalith", candies: 0 },
+              { name: "Gurdurr", evolvesTo: "Conkeldurr", candies: 0 },
+              { name: "Karrablast", evolvesTo: "Escavalier", candies: 0 },
+              { name: "Shelmet", evolvesTo: "Accelgor", candies: 0 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/link-cable.png",
+          },
+        ],
+      },
+      {
+        title: "Evolución mediante aventura",
+        description: "Algunos Pokémon no solo requerirán una cantidad determinada de Caramelos y Polvos Estelares para su evolución, además pedirán que realices alguna acción concreta para ello.",
+        quests: [
+          {
+            item: "Aventura",
+            description: "Cada Pokémon pide una acción distinta. Debajo de las indicaciones de la evolución verás la frase: «Vivid una aventura juntos para evolucionar». Al pulsar sobre ella, podrás ver las especificaciones de la tarea extra de evolución.",
+            pokemons: [
+              { name: "Primeape", evolvesTo: "Annihilape", candies: 0, action: "Derrotar 30 Pokémon de tipo Psíquico o Fantasma" },
+              { name: "Eevee", evolvesTo: "Espeon", candies: 25, action: "Caminar 10 km y evolucionarlo durante el día" },
+              { name: "Eevee", evolvesTo: "Umbreon", candies: 25, action: "Caminar 10 km y evolucionarlo durante la noche" },
+              { name: "Eevee", evolvesTo: "Sylveon", candies: 25, action: "Conseguir 70 corazones como compañero" },
+              { name: "Feebas", evolvesTo: "Milotic", candies: 100, action: "Caminar 20 km como compañero" },
+              { name: "Bonsly", evolvesTo: "Sudowoodo", candies: 50, action: "Caminar 15 km como compañero" },
+              { name: "Mime Jr.", evolvesTo: "Mr. Mime", candies: 50, action: "Caminar 15 km como compañero" },
+              { name: "Happiny", evolvesTo: "Chansey", candies: 25, action: "Caminar 15 km como compañero" },
+              { name: "Woobat", evolvesTo: "Swoobat", candies: 50, action: "Caminar 1 km como compañero" },
+              { name: "Floette", evolvesTo: "Florges", candies: 100, action: "Conseguir 20 corazones como compañero" },
+              { name: "Pancham", evolvesTo: "Pangoro", candies: 50, action: "Capturar 32 Pokémon de tipo Siniestro" },
+              { name: "Spritzee", evolvesTo: "Aromatisse", candies: 50, action: "Usar un incienso" },
+              { name: "Swirlix", evolvesTo: "Slurpuff", candies: 50, action: "Dar 25 golosinas como compañero" },
+              { name: "Slowpoke (Galar)", evolvesTo: "Slowbro (Galar)", candies: 50, action: "Capturar 30 Pokémon de tipo Veneno" },
+              { name: "Slowpoke (Galar)", evolvesTo: "Slowking (Galar)", candies: 50, action: "Capturar 30 Pokémon de tipo Psíquico" },
+              { name: "Farfetch’d (Galar)", evolvesTo: "Sirfetch’d", candies: 50, action: "Realizar 10 lanzamientos excelentes" },
+              { name: "Yamask (Galar)", evolvesTo: "Runerigus", candies: 50, action: "Realizar 10 incursiones" },
+              { name: "Qwilfish (Hisui)", evolvesTo: "Overqwil", candies: 50, action: "Participar en 10 incursiones" },
+              { name: "Sneasel (Hisui)", evolvesTo: "Sneasler", candies: 100, action: "Caminar 7 km y evolucionarlo de día" },
+              { name: "Charcadet", evolvesTo: "Armarouge", candies: 50, action: "Derrotar 30 Pokémon de tipo Psíquico" },
+              { name: "Charcadet", evolvesTo: "Ceruledge", candies: 50, action: "Derrotar 30 Pokémon de tipo Fantasma" },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sachet.png",
+          },
+        ],
+      },
     ];
 
-    // Función para obtener imágenes de Pokémon desde tu sitio principal o desde una fuente permitida
     function getPokemonImage(name) {
-      // Aquí puedes ajustar la URL para que apunte a las imágenes de tu sitio principal
       const formattedName = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
-      return `https://tu-sitio-principal.com/imagenes/${formattedName}.png`;
-    }
-
-    // Función para obtener imágenes de objetos desde una fuente permitida
-    function getItemImage(itemName) {
-      // Puedes ajustar esta función para usar imágenes desde una fuente permitida
-      const formattedName = itemName.toLowerCase().replace(/[^a-z0-9]/g, '-');
-      return `https://tu-sitio-principal.com/objetos/${formattedName}.png`;
+      return `https://img.pokemondb.net/artwork/large/${formattedName}.jpg`;
     }
 
     function showQuests() {
@@ -208,7 +330,7 @@
 
       // Agregar enlace de retorno a la página principal
       const backLink = document.createElement('a');
-      backLink.href = 'index.html';
+      backLink.href = 'index.html'; // Ajusta el nombre de tu página principal si es diferente
       backLink.textContent = '← Volver a la Pokedex';
       backLink.classList.add('back-link');
       container.appendChild(backLink);
@@ -232,7 +354,7 @@
 
           const questHeader = document.createElement('h3');
           const itemImage = document.createElement('img');
-          itemImage.src = getItemImage(quest.item);
+          itemImage.src = quest.itemImage;
           itemImage.alt = quest.item;
           itemImage.classList.add('item-image');
 
@@ -274,8 +396,8 @@
       });
     }
 
-    // Simular un tiempo de carga
-    setTimeout(showQuests, 1500);
+    // Llamamos a la función para mostrar las quests
+    showQuests();
   </script>
 </body>
 </html>
