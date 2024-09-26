@@ -38,6 +38,17 @@
       justify-content: center;
       margin: 20px 0;
     }
+    .gen-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.quests-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
     .generation-btn {
       background-color: var(--btn-color);
       border: none;
@@ -175,7 +186,8 @@
     <input type="text" id="search-bar" placeholder="Buscar Pokémon...">
   </header>
 
-  <div class="generation-buttons">
+<div class="generation-buttons">
+  <div class="gen-buttons">
     <button class="generation-btn" data-gen="1">Gen 1</button>
     <button class="generation-btn" data-gen="2">Gen 2</button>
     <button class="generation-btn" data-gen="3">Gen 3</button>
@@ -185,8 +197,11 @@
     <button class="generation-btn" data-gen="7">Gen 7</button>
     <button class="generation-btn" data-gen="8">Gen 8</button>
     <button class="generation-btn" data-gen="9">Gen 9</button>
-    <br><button class="generation-btn" id="quests-btn">Pokemon Go Quests</button> </br>
   </div>
+  <div class="quests-button">
+    <button class="generation-btn" id="quests-btn">Pokemon Go Quests</button>
+  </div>
+</div>
 
   <main id="pokemon-container"></main>
   <div class="loader" id="loader" style="display:none;"></div>
