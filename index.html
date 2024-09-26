@@ -173,6 +173,8 @@
     <button class="generation-btn" data-gen="7">Gen 7</button>
     <button class="generation-btn" data-gen="8">Gen 8</button>
     <button class="generation-btn" data-gen="9">Gen 9</button>
+    <!-- Botón para Pokemon Go Quests -->
+    <button class="generation-btn" onclick="window.location.href='pokego.html'">Pokemon Go Quests</button>
   </div>
 
   <main id="pokemon-container"></main>
@@ -327,10 +329,14 @@
 
     document.querySelector('.generation-buttons').addEventListener('click', (e) => {
       if (e.target.classList.contains('generation-btn')) {
-        loadGeneration(e.target.dataset.gen);
+        const gen = e.target.dataset.gen;
+        if (gen) {
+          loadGeneration(gen);
+        }
       }
     });
 
+    // Cargar la primera generación al inicio
     loadGeneration(1);
   </script>
 </body>
