@@ -72,6 +72,7 @@
       width: 50px;
       height: 50px;
       margin-right: 10px;
+      object-fit: contain;
     }
     .quest-card p {
       font-size: 1rem;
@@ -132,7 +133,6 @@
 
   <script>
     const questsData = [
-      // Aquí se incluyen todas las categorías y quests completas
       {
         title: "Objetos Evolutivos",
         description: "Daremos inicio con los objetos para evolucionar a ciertas especies de Pokémon los cuales puedes conseguir al girar las Poképaradas (la probabilidad es muy baja), como recompensa de las tareas de investigación (la probabilidad no es muy alta) o en eventos temporales.",
@@ -225,7 +225,7 @@
       },
       {
         title: "Módulos Cebo",
-        description: "Algunos Pokémon requieren algún tipo de Módulo Cebo para evolucionar. En caso de que no cuentes con alguno de estos módulos, cuando veas uno, ¡corre y aprovéchalo!",
+        description: "Algunos Pokémon requieren algún tipo de Módulo Cebo para evolucionar. En caso de que no cuentes con alguno de estos módulos, cuando veas uno, ¡corre y aprovéchalo! Estos módulos cebo los conseguirás en la Tienda por un precio de 200 Pokémonedas, o como recompensa en algunas tareas de investigación especial.",
         quests: [
           {
             item: "Módulo Cebo Glaciar",
@@ -233,7 +233,7 @@
             pokemons: [
               { name: "Eevee", evolvesTo: "Glaceon", candies: 25 },
             ],
-            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/glaciate.png",
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/glacier-mail.png",
           },
           {
             item: "Módulo Cebo Musgoso",
@@ -241,7 +241,7 @@
             pokemons: [
               { name: "Eevee", evolvesTo: "Leafeon", candies: 25 },
             ],
-            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/grass-mail.png",
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/wood-mail.png",
           },
           {
             item: "Módulo Cebo Magnético",
@@ -258,13 +258,13 @@
             pokemons: [
               { name: "Sliggoo", evolvesTo: "Goodra", candies: 100 },
             ],
-            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/damp-rock.png",
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/hydro-mail.png",
           },
         ],
       },
       {
         title: "Evolución mediante intercambio",
-        description: "Emulando a la saga principal, el intercambio resulta una herramienta muy interesante para evolucionar a ciertos Pokémon.",
+        description: "Emulando a la saga principal, el intercambio resulta una herramienta muy interesante para evolucionar a ciertos Pokémon. No evolucionan en cuanto se intercambian, pero el número de caramelos que requerirían normalmente se reduce a cero, por lo que solo necesitamos una pequeña cantidad de Polvos Estelares para hacer efectiva la evolución, lo que es prácticamente un regalo.",
         quests: [
           {
             item: "Intercambio",
@@ -285,12 +285,13 @@
       },
       {
         title: "Evolución mediante aventura",
-        description: "Algunos Pokémon requerirán una acción específica además de los caramelos para evolucionar.",
+        description: "Algunos Pokémon no solo requerirán una cantidad determinada de Caramelos y Polvos Estelares para su evolución, además pedirán que realices alguna acción concreta para ello.",
         quests: [
           {
             item: "Aventura",
-            description: "Cada Pokémon pide una acción distinta, y para saber cuál es, podrás consultar la ficha del Pokémon.",
+            description: "Cada Pokémon pide una acción distinta. Debajo de las indicaciones de la evolución verás la frase: «Vivid una aventura juntos para evolucionar». Al pulsar sobre ella, podrás ver las especificaciones de la tarea extra de evolución.",
             pokemons: [
+              { name: "Primeape", evolvesTo: "Annihilape", candies: 0, action: "Derrotar 30 Pokémon de tipo Psíquico o Fantasma" },
               { name: "Eevee", evolvesTo: "Espeon", candies: 25, action: "Caminar 10 km y evolucionarlo durante el día" },
               { name: "Eevee", evolvesTo: "Umbreon", candies: 25, action: "Caminar 10 km y evolucionarlo durante la noche" },
               { name: "Eevee", evolvesTo: "Sylveon", candies: 25, action: "Conseguir 70 corazones como compañero" },
@@ -300,7 +301,17 @@
               { name: "Happiny", evolvesTo: "Chansey", candies: 25, action: "Caminar 15 km como compañero" },
               { name: "Woobat", evolvesTo: "Swoobat", candies: 50, action: "Caminar 1 km como compañero" },
               { name: "Floette", evolvesTo: "Florges", candies: 100, action: "Conseguir 20 corazones como compañero" },
-              // Agrega los demás Pokémon que evolucionan mediante aventura
+              { name: "Pancham", evolvesTo: "Pangoro", candies: 50, action: "Capturar 32 Pokémon de tipo Siniestro" },
+              { name: "Spritzee", evolvesTo: "Aromatisse", candies: 50, action: "Usar un incienso" },
+              { name: "Swirlix", evolvesTo: "Slurpuff", candies: 50, action: "Dar 25 golosinas como compañero" },
+              { name: "Slowpoke (Galar)", evolvesTo: "Slowbro (Galar)", candies: 50, action: "Capturar 30 Pokémon de tipo Veneno" },
+              { name: "Slowpoke (Galar)", evolvesTo: "Slowking (Galar)", candies: 50, action: "Capturar 30 Pokémon de tipo Psíquico" },
+              { name: "Farfetch’d (Galar)", evolvesTo: "Sirfetch’d", candies: 50, action: "Realizar 10 lanzamientos excelentes" },
+              { name: "Yamask (Galar)", evolvesTo: "Runerigus", candies: 50, action: "Realizar 10 incursiones" },
+              { name: "Qwilfish (Hisui)", evolvesTo: "Overqwil", candies: 50, action: "Participar en 10 incursiones" },
+              { name: "Sneasel (Hisui)", evolvesTo: "Sneasler", candies: 100, action: "Caminar 7 km y evolucionarlo de día" },
+              { name: "Charcadet", evolvesTo: "Armarouge", candies: 50, action: "Derrotar 30 Pokémon de tipo Psíquico" },
+              { name: "Charcadet", evolvesTo: "Ceruledge", candies: 50, action: "Derrotar 30 Pokémon de tipo Fantasma" },
             ],
             itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sachet.png",
           },
@@ -309,12 +320,14 @@
     ];
 
     function getPokemonImage(name) {
-      return `https://img.pokemondb.net/artwork/large/${name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.jpg`;
+      const formattedName = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      return `https://img.pokemondb.net/artwork/large/${formattedName}.jpg`;
     }
 
     function showQuests() {
       const container = document.getElementById('quests-container');
       container.innerHTML = ''; // Limpiar contenido previo
+
       // Agregar enlace de retorno a la página principal
       const backLink = document.createElement('a');
       backLink.href = 'index.html'; // Ajusta el nombre de tu página principal si es diferente
@@ -388,3 +401,4 @@
   </script>
 </body>
 </html>
+
