@@ -3,371 +3,237 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokedex</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
+  <title>Pokemon Go Quests</title>
   <style>
-    :root {
-      --bg-color: #121212;
-      --header-bg: #1E1E1E;
-      --text-color: #fff;
-      --btn-color: #ffcc00;
-      --btn-hover: #f2a900;
-      --quest-btn-color: #e74c3c; /* Color rojo para el botón de quests */
-      --quest-btn-hover: #c0392b; /* Color rojo más oscuro al pasar el mouse */
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Press Start 2P', cursive;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
     }
     header {
-      background-color: var(--header-bg);
-      padding: 20px;
       text-align: center;
+      margin-bottom: 20px;
     }
-    h1 { font-size: 2.25rem; margin-bottom: 10px; }
+    h1 {
+      color: #e91e63;
+    }
     .credit {
-      font-size: 0.875rem;
-      margin-top: 10px;
+      font-style: italic;
+      color: #666;
     }
-    .generation-buttons {
-      display: flex;
-      flex-direction: column; /* Apilamos los elementos verticalmente */
-      align-items: center;    /* Centramos los elementos horizontalmente */
-      margin: 20px 0;
+    .quest-category {
+      margin-bottom: 40px;
     }
-    .gen-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .quests-button {
-      margin-top: 10px;
-    }
-    .generation-btn {
-      background-color: var(--btn-color);
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 1rem;
-      transition: background-color 0.3s;
-    }
-    .generation-btn:hover { background-color: var(--btn-hover); }
-    #quests-btn {
-      background-color: var(--quest-btn-color);
-      color: white;
-      padding: 15px 30px; /* Aumentamos el padding para un botón más grande */
-      font-size: 1.2rem;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      margin-top: 15px;
-    }
-    #quests-btn:hover { background-color: var(--quest-btn-hover); }
-    #search-bar {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-    main {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    .quest-card {
+      background-color: #f9f9f9;
+      border-radius: 8px;
       padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .loader {
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #3498db;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 2s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .pokemon-card {
-      width: 250px;
-      margin: 15px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
-      transition: transform 0.2s;
-      background-color: var(--header-bg);
-      position: relative;
-    }
-    .pokemon-card:hover { transform: scale(1.05); }
-    .pokemon-card img {
-      width: 100%;
-      height: auto;
-      background-color: #f2f2f2;
-      cursor: pointer;
-      display: block;
-      transition: opacity 0.3s ease;
-    }
-    .pokemon-card img.shiny { display: none; }
-    .pokemon-card img.fade-out { opacity: 0; }
-    .pokemon-card img.fade-in { opacity: 1; }
-    .slider-btn {
-      position: absolute;
-      bottom: 10px;
-      background-color: inherit;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      font-size: 1.125rem;
-      color: white;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+    .quest-card h3 {
       display: flex;
-      justify-content: center;
       align-items: center;
-      transition: background-color 0.3s;
+      color: #2196f3;
     }
-    .slider-btn.left { left: 20px; }
-    .slider-btn.right { right: 20px; }
-    .slider-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
-    .pokemon-info {
-      padding: 15px;
-      text-align: center;
+    .item-image {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
     }
-    .pokemon-info h2 {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-      text-transform: capitalize;
-    }
-    .pokemon-info span {
-      font-size: 1rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-    .pokemon-types {
+    .pokemon-list {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 10px;
+      justify-content: space-around;
     }
-    .type {
-      background-color: white;
-      border-radius: 3px;
-      padding: 5px 10px;
-      margin: 2px;
-      font-size: 0.75rem;
-      text-transform: capitalize;
-    }
-    .no-results {
+    .pokemon-item {
       text-align: center;
-      margin-top: 20px;
-      font-size: 1.125rem;
+      margin: 10px;
+      width: 120px;
     }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.75rem; }
-      .pokemon-card { width: 100%; max-width: 300px; }
+    .pokemon-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+    .description {
+      font-style: italic;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #2196f3;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .pokemon-list {
+        flex-direction: column;
+        align-items: center;
+      }
+      .pokemon-item {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Pokedex</h1>
+    <h1>Pokemon Go Quests</h1>
     <div class="credit">Creación de Tato Vergara</div>
-    <input type="text" id="search-bar" placeholder="Buscar Pokémon...">
   </header>
 
-  <div class="generation-buttons">
-    <div class="gen-buttons">
-      <button class="generation-btn" data-gen="1">Gen 1</button>
-      <button class="generation-btn" data-gen="2">Gen 2</button>
-      <button class="generation-btn" data-gen="3">Gen 3</button>
-      <button class="generation-btn" data-gen="4">Gen 4</button>
-      <button class="generation-btn" data-gen="5">Gen 5</button>
-      <button class="generation-btn" data-gen="6">Gen 6</button>
-      <button class="generation-btn" data-gen="7">Gen 7</button>
-      <button class="generation-btn" data-gen="8">Gen 8</button>
-      <button class="generation-btn" data-gen="9">Gen 9</button>
-    </div>
-    <div class="quests-button">
-      <button id="quests-btn">Pokemon Go Quests</button>
-    </div>
-  </div>
-
-  <main id="pokemon-container"></main>
-  <div class="loader" id="loader" style="display:none;"></div>
-  <div id="no-results" class="no-results" style="display:none;">No se encontraron Pokémon</div>
+  <main id="quests-container">
+    <!-- El contenido de las quests se generará aquí -->
+  </main>
 
   <script>
-    const pokemonContainer = document.getElementById('pokemon-container');
-    const loader = document.getElementById('loader');
-    const noResults = document.getElementById('no-results');
-    const searchBar = document.getElementById('search-bar');
-    let allPokemons = [];
+    const questsData = [
+      {
+        title: "Objetos Evolutivos",
+        description: "Daremos inicio con los objetos para evolucionar a ciertas especies de Pokémon los cuales puedes conseguir al girar las Poképaradas (la probabilidad es muy baja), como recompensa de las tareas de investigación (la probabilidad no es muy alta) o en eventos temporales.",
+        quests: [
+          {
+            item: "Piedra Solar",
+            description: "Permite evolucionar a algunos Pokémon de tipo Planta.",
+            pokemons: [
+              { name: "Gloom", evolvesTo: "Bellossom", candies: 100 },
+              { name: "Sunkern", evolvesTo: "Sunflora", candies: 50 },
+              { name: "Cottonee", evolvesTo: "Whimsicott", candies: 50 },
+              { name: "Petilil", evolvesTo: "Lilligant", candies: 50 },
+            ],
+            itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sun-stone.png",
+          },
+          // ... (otros objetos evolutivos)
+        ],
+      },
+      // ... (otras categorías de quests)
+    ];
 
-    const typeColors = {
-      normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C',
-      grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1',
-      ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A',
-      rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705746',
-      steel: '#B7B7CE', fairy: '#D685AD'
-    };
-
-    const showLoader = () => loader.style.display = 'block';
-    const hideLoader = () => loader.style.display = 'none';
-
-    async function loadGeneration(gen) {
-      pokemonContainer.innerHTML = '';
-      showLoader();
-      allPokemons = [];
-      noResults.style.display = 'none';
-
-      try {
-        const response = await fetch(`https://pokeapi.co/api/v2/generation/${gen}`);
-        const data = await response.json();
-        const pokemonSpecies = data.pokemon_species.sort((a, b) => 
-          parseInt(a.url.split("/")[6]) - parseInt(b.url.split("/")[6])
-        );
-
-        await Promise.all(pokemonSpecies.map(async (species) => {
-          const pokemonData = await fetchPokemonData(species.url);
-          allPokemons.push(pokemonData);
-          createPokemonCard(pokemonData);
-        }));
-      } catch (error) {
-        console.error('Error loading generation:', error);
-      } finally {
-        hideLoader();
-      }
+    function getPokemonImage(name) {
+      // Formatear el nombre del Pokémon para la URL
+      const formattedName = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      
+      // Construir la URL de la imagen usando la misma fuente que la Pokédex
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonId(formattedName)}.png`;
     }
 
-    async function fetchPokemonData(url) {
-      const speciesResponse = await fetch(url);
-      const speciesData = await speciesResponse.json();
-      const pokemonResponse = await fetch(speciesData.varieties[0].pokemon.url);
-      return await pokemonResponse.json();
-    }
-
-    function createPokemonCard(pokemon) {
-      const card = document.createElement('div');
-      card.classList.add('pokemon-card');
-
-      const primaryType = pokemon.types[0].type.name;
-      const color1 = typeColors[primaryType];
-      const color2 = pokemon.types[1] ? typeColors[pokemon.types[1].type.name] : color1;
-
-      card.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
-
-      const spriteContainer = document.createElement('div');
-      spriteContainer.classList.add('sprite-container');
-      spriteContainer.style.position = 'relative';
-
-      const sprite = createImage(pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default, pokemon.name);
-      const altImage = createImage(pokemon.sprites.other['home'].front_shiny || sprite.src, `${pokemon.name} shiny version`);
-      altImage.style.display = 'none';
-
-      const [leftButton, rightButton] = createNavigationButtons(color1);
-
-      let isMainImage = true;
-      const switchImage = () => {
-        sprite.classList.toggle('fade-out');
-        altImage.classList.toggle('fade-in');
-        setTimeout(() => {
-          sprite.style.display = isMainImage ? 'none' : 'block';
-          altImage.style.display = isMainImage ? 'block' : 'none';
-          isMainImage = !isMainImage;
-          sprite.classList.toggle('fade-out');
-          altImage.classList.toggle('fade-in');
-        }, 300);
+    // Función auxiliar para obtener el ID del Pokémon
+    function getPokemonId(name) {
+      const pokemonIds = {
+        'bulbasaur': 1, 'ivysaur': 2, 'venusaur': 3, 'charmander': 4, 'charmeleon': 5, 'charizard': 6,
+        'squirtle': 7, 'wartortle': 8, 'blastoise': 9, 'caterpie': 10, 'metapod': 11, 'butterfree': 12,
+        'weedle': 13, 'kakuna': 14, 'beedrill': 15, 'pidgey': 16, 'pidgeotto': 17, 'pidgeot': 18,
+        'rattata': 19, 'raticate': 20, 'spearow': 21, 'fearow': 22, 'ekans': 23, 'arbok': 24,
+        'pikachu': 25, 'raichu': 26, 'sandshrew': 27, 'sandslash': 28, 'nidoran-f': 29, 'nidorina': 30,
+        'nidoqueen': 31, 'nidoran-m': 32, 'nidorino': 33, 'nidoking': 34, 'clefairy': 35, 'clefable': 36,
+        'vulpix': 37, 'ninetales': 38, 'jigglypuff': 39, 'wigglytuff': 40, 'zubat': 41, 'golbat': 42,
+        'oddish': 43, 'gloom': 44, 'vileplume': 45, 'paras': 46, 'parasect': 47, 'venonat': 48,
+        'venomoth': 49, 'diglett': 50, 'dugtrio': 51, 'meowth': 52, 'persian': 53, 'psyduck': 54,
+        'golduck': 55, 'mankey': 56, 'primeape': 57, 'growlithe': 58, 'arcanine': 59, 'poliwag': 60,
+        'poliwhirl': 61, 'poliwrath': 62, 'abra': 63, 'kadabra': 64, 'alakazam': 65, 'machop': 66,
+        'machoke': 67, 'machamp': 68, 'bellsprout': 69, 'weepinbell': 70, 'victreebel': 71, 'tentacool': 72,
+        'tentacruel': 73, 'geodude': 74, 'graveler': 75, 'golem': 76, 'ponyta': 77, 'rapidash': 78,
+        'slowpoke': 79, 'slowbro': 80, 'magnemite': 81, 'magneton': 82, 'farfetchd': 83, 'doduo': 84,
+        'dodrio': 85, 'seel': 86, 'dewgong': 87, 'grimer': 88, 'muk': 89, 'shellder': 90, 'cloyster': 91,
+        'gastly': 92, 'haunter': 93, 'gengar': 94, 'onix': 95, 'drowzee': 96, 'hypno': 97, 'krabby': 98,
+        'kingler': 99, 'voltorb': 100, 'electrode': 101, 'exeggcute': 102, 'exeggutor': 103, 'cubone': 104,
+        'marowak': 105, 'hitmonlee': 106, 'hitmonchan': 107, 'lickitung': 108, 'koffing': 109, 'weezing': 110,
+        'rhyhorn': 111, 'rhydon': 112, 'chansey': 113, 'tangela': 114, 'kangaskhan': 115, 'horsea': 116,
+        'seadra': 117, 'goldeen': 118, 'seaking': 119, 'staryu': 120, 'starmie': 121, 'mr-mime': 122,
+        'scyther': 123, 'jynx': 124, 'electabuzz': 125, 'magmar': 126, 'pinsir': 127, 'tauros': 128,
+        'magikarp': 129, 'gyarados': 130, 'lapras': 131, 'ditto': 132, 'eevee': 133, 'vaporeon': 134,
+        'jolteon': 135, 'flareon': 136, 'porygon': 137, 'omanyte': 138, 'omastar': 139, 'kabuto': 140,
+        'kabutops': 141, 'aerodactyl': 142, 'snorlax': 143, 'articuno': 144, 'zapdos': 145, 'moltres': 146,
+        'dratini': 147, 'dragonair': 148, 'dragonite': 149, 'mewtwo': 150, 'mew': 151,
+        // ... Añadir más mapeos de nombre a ID aquí para cubrir todos los Pokémon relevantes
       };
+      return pokemonIds[name] || 1; // Devuelve 1 (Bulbasaur) si no se encuentra el ID
+    }
 
-      leftButton.addEventListener('click', switchImage);
-      rightButton.addEventListener('click', switchImage);
+    function showQuests() {
+      const container = document.getElementById('quests-container');
+      container.innerHTML = ''; // Limpiar contenido previo
 
-      spriteContainer.append(sprite, altImage, leftButton, rightButton);
+      // Agregar enlace de retorno a la página principal
+      const backLink = document.createElement('a');
+      backLink.href = 'index.html'; // Ajusta el nombre de tu página principal si es diferente
+      backLink.textContent = '← Volver a la Pokedex';
+      backLink.classList.add('back-link');
+      container.appendChild(backLink);
 
-      const info = document.createElement('div');
-      info.classList.add('pokemon-info');
+      questsData.forEach(category => {
+        const categorySection = document.createElement('div');
+        categorySection.classList.add('quest-category');
 
-      const name = document.createElement('h2');
-      name.textContent = pokemon.name;
+        const categoryTitle = document.createElement('h2');
+        categoryTitle.textContent = category.title;
+        categorySection.appendChild(categoryTitle);
 
-      const number = document.createElement('span');
-      number.textContent = `#${pokemon.id.toString().padStart(3, '0')}`;
+        const categoryDescription = document.createElement('p');
+        categoryDescription.textContent = category.description;
+        categoryDescription.classList.add('description');
+        categorySection.appendChild(categoryDescription);
 
-      const types = document.createElement('div');
-      types.classList.add('pokemon-types');
+        category.quests.forEach(quest => {
+          const questCard = document.createElement('div');
+          questCard.classList.add('quest-card');
 
-      pokemon.types.forEach(typeInfo => {
-        const type = document.createElement('span');
-        type.classList.add('type');
-        type.textContent = typeInfo.type.name;
-        type.style.color = color1;
-        types.appendChild(type);
+          const questHeader = document.createElement('h3');
+          const itemImage = document.createElement('img');
+          itemImage.src = quest.itemImage;
+          itemImage.alt = quest.item;
+          itemImage.classList.add('item-image');
+
+          questHeader.appendChild(itemImage);
+          questHeader.appendChild(document.createTextNode(quest.item));
+          questCard.appendChild(questHeader);
+
+          const questDescription = document.createElement('p');
+          questDescription.textContent = quest.description;
+          questCard.appendChild(questDescription);
+
+          const pokemonList = document.createElement('div');
+          pokemonList.classList.add('pokemon-list');
+
+          quest.pokemons.forEach(pokemon => {
+            const pokemonItem = document.createElement('div');
+            pokemonItem.classList.add('pokemon-item');
+
+            const pokemonImage = document.createElement('img');
+            pokemonImage.src = getPokemonImage(pokemon.name);
+            pokemonImage.alt = pokemon.name;
+            pokemonImage.loading = "lazy"; // Añadir carga perezosa para mejorar el rendimiento
+
+            const pokemonInfo = document.createElement('p');
+            pokemonInfo.innerHTML = `
+              <strong>${pokemon.name}</strong> evoluciona a <strong>${pokemon.evolvesTo}</strong><br>
+              (${pokemon.candies} caramelos${pokemon.action ? ', ' + pokemon.action : ''})
+            `;
+
+            pokemonItem.appendChild(pokemonImage);
+            pokemonItem.appendChild(pokemonInfo);
+            pokemonList.appendChild(pokemonItem);
+          });
+
+          questCard.appendChild(pokemonList);
+          categorySection.appendChild(questCard);
+        });
+
+        container.appendChild(categorySection);
       });
-
-      info.append(name, number, types);
-      card.append(spriteContainer, info);
-      pokemonContainer.appendChild(card);
     }
 
-    function createImage(src, alt) {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = alt;
-      img.loading = "lazy";
-      return img;
-    }
-
-    function createNavigationButtons(color) {
-      const leftButton = document.createElement('button');
-      leftButton.classList.add('slider-btn', 'left');
-      leftButton.innerHTML = '&#60;';
-      leftButton.style.backgroundColor = color;
-
-      const rightButton = document.createElement('button');
-      rightButton.classList.add('slider-btn', 'right');
-      rightButton.innerHTML = '&#62;';
-      rightButton.style.backgroundColor = color;
-
-      return [leftButton, rightButton];
-    }
-
-    searchBar.addEventListener('input', (e) => {
-      const searchString = e.target.value.toLowerCase();
-      const filteredPokemons = allPokemons.filter(pokemon => 
-        pokemon.name.toLowerCase().includes(searchString)
-      );
-
-      pokemonContainer.innerHTML = '';
-      noResults.style.display = filteredPokemons.length === 0 ? 'block' : 'none';
-      filteredPokemons.forEach(createPokemonCard);
-    });
-
-    document.querySelector('.gen-buttons').addEventListener('click', (e) => {
-      if (e.target.classList.contains('generation-btn')) {
-        const gen = e.target.dataset.gen;
-        if (gen) {
-          searchBar.style.display = 'block';
-          pokemonContainer.style.display = 'flex';
-          loadGeneration(gen);
-        }
-      }
-    });
-
-    document.getElementById('quests-btn').addEventListener('click', () => {
-      window.location.href = 'pokego.html';
-    });
-
-    // Cargar la primera generación al inicio
-    loadGeneration(1);
+    // Llamamos a la función para mostrar las quests
+    showQuests();
   </script>
 </body>
 </html>
-
