@@ -174,7 +174,7 @@
     <button class="generation-btn" data-gen="8">Gen 8</button>
     <button class="generation-btn" data-gen="9">Gen 9</button>
     <!-- Botón para Pokemon Go Quests -->
-    <button class="generation-btn" onclick="window.location.href='pokego.html'">Pokemon Go Quests</button>
+    <button class="generation-btn" id="quests-btn">Pokemon Go Quests</button>
   </div>
 
   <main id="pokemon-container"></main>
@@ -321,7 +321,7 @@
       const filteredPokemons = allPokemons.filter(pokemon => 
         pokemon.name.toLowerCase().includes(searchString)
       );
-      
+
       pokemonContainer.innerHTML = '';
       noResults.style.display = filteredPokemons.length === 0 ? 'block' : 'none';
       filteredPokemons.forEach(createPokemonCard);
@@ -331,9 +331,19 @@
       if (e.target.classList.contains('generation-btn')) {
         const gen = e.target.dataset.gen;
         if (gen) {
+          // Mostrar la barra de búsqueda si está oculta
+          searchBar.style.display = 'block';
+          // Ocultar cualquier otro contenido que no sea el contenedor de Pokémon
+          pokemonContainer.style.display = 'flex';
+          // Cargar la generación seleccionada
           loadGeneration(gen);
         }
       }
+    });
+
+    // Agregar evento al botón "Pokemon Go Quests"
+    document.getElementById('quests-btn').addEventListener('click', () => {
+      window.location.href = 'pokego.html';
     });
 
     // Cargar la primera generación al inicio
