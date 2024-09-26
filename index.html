@@ -13,8 +13,8 @@
       --text-color: #fff;
       --btn-color: #ffcc00;
       --btn-hover: #f2a900;
-      --quest-btn-color: #3498db;
-      --quest-btn-hover: #2980b9;
+      --quest-btn-color: #e74c3c; /* Color rojo para el botón de quests */
+      --quest-btn-hover: #c0392b; /* Color rojo más oscuro al pasar el mouse */
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -34,21 +34,18 @@
     }
     .generation-buttons {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: column; /* Apilamos los elementos verticalmente */
+      align-items: center;    /* Centramos los elementos horizontalmente */
       margin: 20px 0;
     }
     .gen-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.quests-button {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .quests-button {
+      margin-top: 10px;
+    }
     .generation-btn {
       background-color: var(--btn-color);
       border: none;
@@ -63,11 +60,11 @@
     #quests-btn {
       background-color: var(--quest-btn-color);
       color: white;
-      width: 100%;
-      max-width: 300px;
-      margin-top: 20px;
-      padding: 15px;
+      padding: 15px 30px; /* Aumentamos el padding para un botón más grande */
       font-size: 1.2rem;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      margin-top: 15px;
     }
     #quests-btn:hover { background-color: var(--quest-btn-hover); }
     #search-bar {
@@ -186,22 +183,22 @@
     <input type="text" id="search-bar" placeholder="Buscar Pokémon...">
   </header>
 
-<div class="generation-buttons">
-  <div class="gen-buttons">
-    <button class="generation-btn" data-gen="1">Gen 1</button>
-    <button class="generation-btn" data-gen="2">Gen 2</button>
-    <button class="generation-btn" data-gen="3">Gen 3</button>
-    <button class="generation-btn" data-gen="4">Gen 4</button>
-    <button class="generation-btn" data-gen="5">Gen 5</button>
-    <button class="generation-btn" data-gen="6">Gen 6</button>
-    <button class="generation-btn" data-gen="7">Gen 7</button>
-    <button class="generation-btn" data-gen="8">Gen 8</button>
-    <button class="generation-btn" data-gen="9">Gen 9</button>
+  <div class="generation-buttons">
+    <div class="gen-buttons">
+      <button class="generation-btn" data-gen="1">Gen 1</button>
+      <button class="generation-btn" data-gen="2">Gen 2</button>
+      <button class="generation-btn" data-gen="3">Gen 3</button>
+      <button class="generation-btn" data-gen="4">Gen 4</button>
+      <button class="generation-btn" data-gen="5">Gen 5</button>
+      <button class="generation-btn" data-gen="6">Gen 6</button>
+      <button class="generation-btn" data-gen="7">Gen 7</button>
+      <button class="generation-btn" data-gen="8">Gen 8</button>
+      <button class="generation-btn" data-gen="9">Gen 9</button>
+    </div>
+    <div class="quests-button">
+      <button id="quests-btn">Pokemon Go Quests</button>
+    </div>
   </div>
-  <div class="quests-button">
-    <button class="generation-btn" id="quests-btn">Pokemon Go Quests</button>
-  </div>
-</div>
 
   <main id="pokemon-container"></main>
   <div class="loader" id="loader" style="display:none;"></div>
@@ -353,7 +350,7 @@
       filteredPokemons.forEach(createPokemonCard);
     });
 
-    document.querySelector('.generation-buttons').addEventListener('click', (e) => {
+    document.querySelector('.gen-buttons').addEventListener('click', (e) => {
       if (e.target.classList.contains('generation-btn')) {
         const gen = e.target.dataset.gen;
         if (gen) {
@@ -367,11 +364,10 @@
     document.getElementById('quests-btn').addEventListener('click', () => {
       window.location.href = 'pokego.html';
     });
-    document.getElementById('quests-btn').addEventListener('click', () => {
-  window.location.href = 'pokego.html';
-});
 
+    // Cargar la primera generación al inicio
     loadGeneration(1);
   </script>
 </body>
 </html>
+
