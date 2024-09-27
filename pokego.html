@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png">
   <style>
+    /* Estilos CSS */
     :root {
       --bg-color: #1e1e1e;
       --header-bg: #121212;
@@ -118,11 +119,11 @@
     .pokemon-item img {
       width: 100px;
       height: 100px;
-      border-radius: 50%;
       background-color: #f2f2f2;
       margin-bottom: 10px;
       object-fit: contain;
       box-shadow: 0 0 10px rgba(255,204,0,0.5);
+      border-radius: 50%;
     }
     .pokemon-item p {
       font-size: 0.9rem;
@@ -184,6 +185,7 @@
 
   <script>
     const questsData = [
+      // Aquí incluyo todo el contenido proporcionado por ti, organizado en categorías y quests
       {
         title: "Objetos Evolutivos",
         description: "Daremos inicio con los objetos para evolucionar a ciertas especies de pokémon los cuáles podéis conseguir al girar las Poképaradas (la probabilidad es muy baja), como recompensa de las tareas de investigación (la probabilidad no es muy alta) o en eventos temporales.",
@@ -197,7 +199,6 @@
               { name: "Cottonee", evolvesTo: "Whimsicott", candies: 50 },
               { name: "Petilil", evolvesTo: "Lilligant", candies: 50 },
             ],
-            itemImage: "https://tu-sitio.com/imagenes/objetos/piedrasolar.png",
           },
           {
             item: "Escama Dragón",
@@ -205,12 +206,124 @@
             pokemons: [
               { name: "Seadra", evolvesTo: "Kingdra", candies: 100 },
             ],
-            itemImage: "https://tu-sitio.com/imagenes/objetos/escamadragon.png",
           },
-          // ... (Agrega las demás quests de esta categoría)
+          {
+            item: "Roca del Rey",
+            description: "Esta piedra evolutiva está relacionada a los Pokémon de tipo Agua.",
+            pokemons: [
+              { name: "Poliwhirl", evolvesTo: "Politoed", candies: 100 },
+              { name: "Slowpoke", evolvesTo: "Slowking", candies: 50 },
+            ],
+          },
+          {
+            item: "Mejora",
+            description: "Este objeto os permite evolucionar a Pokémon de tipo Normal.",
+            pokemons: [
+              { name: "Porygon", evolvesTo: "Porygon2", candies: 25 },
+            ],
+          },
+          {
+            item: "Revestimiento metálico",
+            description: "Este objeto os permite evolucionar a Pokémon de tipo Acero.",
+            pokemons: [
+              { name: "Onix", evolvesTo: "Steelix", candies: 50 },
+              { name: "Scyther", evolvesTo: "Scizor", candies: 50 },
+            ],
+          },
+          {
+            item: "Piedra Sinnoh",
+            description: "Esta piedra os permite evolucionar a Pokémon que se encuentran en esta región.",
+            pokemons: [
+              { name: "Lickitung", evolvesTo: "Lickilicky", candies: 100 },
+              { name: "Rhydon", evolvesTo: "Rhyperior", candies: 100 },
+              { name: "Tangela", evolvesTo: "Tangrowth", candies: 100 },
+              { name: "Electabuzz", evolvesTo: "Electivire", candies: 100 },
+              { name: "Magmar", evolvesTo: "Magmortar", candies: 100 },
+              { name: "Togetic", evolvesTo: "Togekiss", candies: 100 },
+              { name: "Aipom", evolvesTo: "Ambipom", candies: 100 },
+              { name: "Yanma", evolvesTo: "Yanmega", candies: 100 },
+              { name: "Murkrow", evolvesTo: "Honchkrow", candies: 100 },
+              { name: "Misdreavus", evolvesTo: "Mismagius", candies: 100 },
+              { name: "Gligar", evolvesTo: "Gliscor", candies: 100 },
+              { name: "Sneasel", evolvesTo: "Weavile", candies: 100 },
+              { name: "Piloswine", evolvesTo: "Mamoswine", candies: 100 },
+              { name: "Porygon2", evolvesTo: "Porygon-Z", candies: 100 },
+              { name: "Kirlia (macho)", evolvesTo: "Gallade", candies: 100 },
+              { name: "Roselia", evolvesTo: "Roserade", candies: 100 },
+              { name: "Dusclops", evolvesTo: "Dusknoir", candies: 100 },
+              { name: "Snorunt (hembra)", evolvesTo: "Froslass", candies: 100 },
+            ],
+          },
+          {
+            item: "Piedra Teselia",
+            description: "Esta piedra os permite evolucionar a pokémon que se encuentran en esta región.",
+            pokemons: [
+              { name: "Pansear", evolvesTo: "Simisear", candies: 50 },
+              { name: "Panpour", evolvesTo: "Simipour", candies: 50 },
+              { name: "Pansage", evolvesTo: "Simisage", candies: 50 },
+              { name: "Munna", evolvesTo: "Musharna", candies: 50 },
+              { name: "Minccino", evolvesTo: "Cinccino", candies: 50 },
+              { name: "Eelektrik", evolvesTo: "Eelektross", candies: 100 },
+              { name: "Lampent", evolvesTo: "Chandelure", candies: 100 },
+            ],
+          },
         ],
       },
-      // ... (Agrega las demás categorías y quests)
+      {
+        title: "Módulos Cebo",
+        description: "Algunos Pokémon requieren algún tipo de Módulo Cebo para evolucionar, a continuación os listamos cuáles y qué módulo deberéis utilizar. En caso de que no contéis con alguno de estos módulos, cuando veáis uno, ¡corred y aprovechad! Estos módulos cebo los conseguiréis en la Tienda por un precio de 200 Pokémonedas, o como recompensa en algunas tareas de investigación especial.",
+        quests: [
+          {
+            item: "Módulo Cebo Glaciar",
+            description: "El Módulo Cebo Glaciar sirve para atraer a Pokémon de tipo Hielo y Agua.",
+            pokemons: [
+              { name: "Eevee", evolvesTo: "Glaceon", candies: 25 },
+            ],
+          },
+          {
+            item: "Módulo Cebo Musgoso",
+            description: "Este módulo sirve para atraer a Pokémon de tipo Bicho, Planta y Veneno.",
+            pokemons: [
+              { name: "Eevee", evolvesTo: "Leafeon", candies: 25 },
+            ],
+          },
+          {
+            item: "Módulo Cebo Magnético",
+            description: "Este módulo sirve para atraer a Pokémon de tipo Eléctrico, Acero y Roca.",
+            pokemons: [
+              { name: "Magneton", evolvesTo: "Magnezone", candies: 100 },
+              { name: "Nosepass", evolvesTo: "Probopass", candies: 50 },
+            ],
+          },
+          {
+            item: "Módulo Cebo Lluvioso",
+            description: "Este módulo sirve para atraer a Pokémon tipo Agua, Eléctrico y Bicho.",
+            pokemons: [
+              { name: "Sliggoo", evolvesTo: "Goodra", candies: 50 },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Evolución mediante intercambio",
+        description: "Emulando a la saga principal, el intercambio resulta una herramienta muy interesante para evolucionar a ciertos Pokémon. No evolucionan en cuanto se intercambian, pero el número de caramelos que requerirían normalmente se reduce a cero, por lo que sólo necesitamos una pequeña cantidad de Polvos Estelares para hacer efectiva la evolución, lo que es prácticamente un regalo.",
+        quests: [
+          {
+            item: "Intercambio",
+            description: "Los Pokémon que pueden evolucionar al ser intercambiados son los siguientes:",
+            pokemons: [
+              { name: "Kadabra", evolvesTo: "Alakazam", candies: 0 },
+              { name: "Machoke", evolvesTo: "Machamp", candies: 0 },
+              { name: "Graveler", evolvesTo: "Golem", candies: 0 },
+              { name: "Haunter", evolvesTo: "Gengar", candies: 0 },
+              { name: "Boldore", evolvesTo: "Gigalith", candies: 0 },
+              { name: "Gurdurr", evolvesTo: "Conkeldurr", candies: 0 },
+              { name: "Karrablast", evolvesTo: "Escavalier", candies: 0 },
+              { name: "Shelmet", evolvesTo: "Accelgor", candies: 0 },
+            ],
+          },
+        ],
+      },
       {
         title: "Evolución mediante aventura",
         description: "Algunos Pokémon no sólo requerirán una cantidad determinada de Caramelos y Polvos Estelares para su evolución, además pedirán que realicéis alguna acción concreta para ello.",
@@ -219,16 +332,28 @@
             item: "Aventura",
             description: "Cada Pokémon pide una acción distinta, y para saber cuál es, podréis consultar la ficha del Pokémon.",
             pokemons: [
-              { name: "Mime Jr.", evolvesTo: "Mr. Mime", candies: 50, action: "Caminar 15 km como compañero" },
+              { name: "Primeape", evolvesTo: "Annihilape", candies: 0, action: "Derrotar 30 Pokémon de tipos Psíquico o Fantasma" },
+              { name: "Eevee", evolvesTo: "Espeon", candies: 25, action: "Caminar 10 kilómetros con él y evolucionarlo durante el día" },
+              { name: "Eevee", evolvesTo: "Umbreon", candies: 25, action: "Caminar 10 kilómetros con él y evolucionarlo durante la noche" },
+              { name: "Eevee", evolvesTo: "Sylveon", candies: 25, action: "Conseguir 70 corazones con él para evolucionarlo" },
+              { name: "Feebas", evolvesTo: "Milotic", candies: 100, action: "Caminar 20 kilómetros con él para evolucionarlo" },
+              { name: "Bonsly", evolvesTo: "Sudowoodo", candies: 50, action: "Caminar 15 kilómetros con él para evolucionarlo" },
+              { name: "Mime Jr.", evolvesTo: "Mr. Mime", candies: 50, action: "Caminar 15 kilómetros con él para evolucionarlo" },
+              { name: "Happiny", evolvesTo: "Chansey", candies: 25, action: "Caminar 15 kilómetros con él para evolucionarlo" },
+              { name: "Woobat", evolvesTo: "Swoobat", candies: 50, action: "Caminar 1 kilómetro con él para evolucionarlo" },
+              { name: "Floette", evolvesTo: "Florges", candies: 100, action: "Conseguir 20 corazones con él" },
+              { name: "Pancham", evolvesTo: "Pangoro", candies: 50, action: "Capturar 32 Pokémon de tipo Siniestro" },
+              { name: "Spritzee", evolvesTo: "Aromatisse", candies: 50, action: "Usar un incienso" },
+              { name: "Swirlix", evolvesTo: "Slurpuff", candies: 50, action: "Dar 25 golosinas como compañero" },
               { name: "Slowpoke (Galar)", evolvesTo: "Slowbro (Galar)", candies: 50, action: "Capturar 30 Pokémon de tipo Veneno" },
               { name: "Slowpoke (Galar)", evolvesTo: "Slowking (Galar)", candies: 50, action: "Capturar 30 Pokémon de tipo Psíquico" },
               { name: "Farfetch’d (Galar)", evolvesTo: "Sirfetch’d", candies: 50, action: "Realizar 10 lanzamientos excelentes" },
               { name: "Yamask (Galar)", evolvesTo: "Runerigus", candies: 50, action: "Realizar 10 incursiones" },
               { name: "Qwilfish (Hisui)", evolvesTo: "Overqwil", candies: 50, action: "Participar en 10 incursiones" },
               { name: "Sneasel (Hisui)", evolvesTo: "Sneasler", candies: 100, action: "Caminar 7 km y evolucionarlo de día" },
-              // ... (Agrega los demás Pokémon)
+              { name: "Charcadet", evolvesTo: "Armarouge", candies: 50, action: "Derrotar 30 Pokémon de tipo Psíquico" },
+              { name: "Charcadet", evolvesTo: "Ceruledge", candies: 50, action: "Derrotar 30 Pokémon de tipo Fantasma" },
             ],
-            itemImage: "https://tu-sitio.com/imagenes/objetos/aventura.png",
           },
         ],
       },
@@ -236,32 +361,194 @@
 
     // Mapeo de nombres especiales de Pokémon a nombres de archivo
     const pokemonImageMap = {
-      'Mime Jr.': 'mimejr',
-      'Mr. Mime': 'mrmime',
-      'Slowpoke (Galar)': 'slowpokegalar',
-      'Slowbro (Galar)': 'slowbrogalar',
-      'Slowking (Galar)': 'slowkinggalar',
-      'Farfetch’d (Galar)': 'farfetchdgalar',
-      "Farfetch'd (Galar)": 'farfetchdgalar',
-      'Yamask (Galar)': 'yamaskgalar',
-      'Qwilfish (Hisui)': 'qwilfishhisui',
-      'Sneasel (Hisui)': 'sneaselhisui',
+      'Mime Jr.': 'mime-jr',
+      'Mr. Mime': 'mr-mime',
+      'Slowpoke (Galar)': 'slowpoke-galar',
+      'Slowbro (Galar)': 'slowbro-galar',
+      'Slowking (Galar)': 'slowking-galar',
+      'Farfetch’d (Galar)': 'farfetchd-galar',
+      "Farfetch'd (Galar)": 'farfetchd-galar',
+      'Yamask (Galar)': 'yamask-galar',
+      'Qwilfish (Hisui)': 'qwilfish-hisui',
+      'Sneasel (Hisui)': 'sneasel-hisui',
       'Sirfetch’d': 'sirfetchd',
       "Sirfetch'd": 'sirfetchd',
       'Runerigus': 'runerigus',
       'Overqwil': 'overqwil',
       'Sneasler': 'sneasler',
+      'Kirlia (macho)': 'kirlia',
+      'Snorunt (hembra)': 'snorunt',
+      'Porygon-Z': 'porygon-z',
+      'Annihilape': 'annihilape',
       // Agrega más si es necesario
     };
 
     function getPokemonImage(name) {
-      const formattedName = pokemonImageMap[name] || name.toLowerCase().replace(/[^\w]/g, '');
-      return `https://tu-sitio.com/imagenes/pokemon/${formattedName}.png`;
+      const formattedName = pokemonImageMap[name] || name.toLowerCase().replace(/[^\w-]/g, '-');
+      const id = getPokemonId(formattedName);
+      if (id) {
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+      } else {
+        // Imagen de marcador de posición si no se encuentra el ID
+        return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';
+      }
+    }
+
+    function getPokemonId(name) {
+      const pokemonIds = {
+        'gloom': 44,
+        'bellossom': 182,
+        'sunkern': 191,
+        'sunflora': 192,
+        'cottonee': 546,
+        'whimsicott': 547,
+        'petilil': 548,
+        'lilligant': 549,
+        'seadra': 117,
+        'kingdra': 230,
+        'poliwhirl': 61,
+        'politoed': 186,
+        'slowpoke': 79,
+        'slowbro': 80,
+        'slowking': 199,
+        'porygon': 137,
+        'porygon2': 233,
+        'porygon-z': 474,
+        'onix': 95,
+        'steelix': 208,
+        'scyther': 123,
+        'scizor': 212,
+        'lickitung': 108,
+        'lickilicky': 463,
+        'rhydon': 112,
+        'rhyperior': 464,
+        'tangela': 114,
+        'tangrowth': 465,
+        'electabuzz': 125,
+        'electivire': 466,
+        'magmar': 126,
+        'magmortar': 467,
+        'togetic': 176,
+        'togekiss': 468,
+        'aipom': 190,
+        'ambipom': 424,
+        'yanma': 193,
+        'yanmega': 469,
+        'murkrow': 198,
+        'honchkrow': 430,
+        'misdreavus': 200,
+        'mismagius': 429,
+        'gligar': 207,
+        'gliscor': 472,
+        'sneasel': 215,
+        'weavile': 461,
+        'piloswine': 221,
+        'mamoswine': 473,
+        'kirlia': 281,
+        'gallade': 475,
+        'roselia': 315,
+        'roserade': 407,
+        'dusclops': 356,
+        'dusknoir': 477,
+        'snorunt': 361,
+        'froslass': 478,
+        'pansear': 513,
+        'simisear': 514,
+        'panpour': 515,
+        'simipour': 516,
+        'pansage': 511,
+        'simisage': 512,
+        'munna': 517,
+        'musharna': 518,
+        'minccino': 572,
+        'cinccino': 573,
+        'eelektrik': 603,
+        'eelektross': 604,
+        'lampent': 608,
+        'chandelure': 609,
+        'eevee': 133,
+        'glaceon': 471,
+        'leafeon': 470,
+        'magneton': 82,
+        'magnezone': 462,
+        'nosepass': 299,
+        'probopass': 476,
+        'sliggoo': 705,
+        'goodra': 706,
+        'kadabra': 64,
+        'alakazam': 65,
+        'machoke': 67,
+        'machamp': 68,
+        'graveler': 75,
+        'golem': 76,
+        'haunter': 93,
+        'gengar': 94,
+        'boldore': 525,
+        'gigalith': 526,
+        'gurdurr': 533,
+        'conkeldurr': 534,
+        'karrablast': 588,
+        'escavalier': 589,
+        'shelmet': 616,
+        'accelgor': 617,
+        'primeape': 57,
+        'annihilape': 979,
+        'sylveon': 700,
+        'feebas': 349,
+        'milotic': 350,
+        'bonsly': 438,
+        'sudowoodo': 185,
+        'mime-jr': 439,
+        'mr-mime': 122,
+        'happiny': 440,
+        'chansey': 113,
+        'woobat': 527,
+        'swoobat': 528,
+        'floette': 670,
+        'florges': 671,
+        'pancham': 674,
+        'pangoro': 675,
+        'spritzee': 682,
+        'aromatisse': 683,
+        'swirlix': 684,
+        'slurpuff': 685,
+        'charcadet': 935,
+        'armarouge': 936,
+        'ceruledge': 937,
+        'slowpoke-galar': 79,
+        'slowbro-galar': 80,
+        'slowking-galar': 199,
+        'farfetchd-galar': 83,
+        'sirfetchd': 865,
+        'yamask-galar': 562,
+        'runerigus': 867,
+        'qwilfish-hisui': 211,
+        'overqwil': 904,
+        'sneasel-hisui': 215,
+        'sneasler': 903,
+        // Agrega más si es necesario
+      };
+      return pokemonIds[name] || 0;
     }
 
     function getItemImage(itemName) {
-      const formattedName = itemName.toLowerCase().replace(/[^\w]/g, '');
-      return `https://tu-sitio.com/imagenes/objetos/${formattedName}.png`;
+      const itemImageMap = {
+        'Piedra Solar': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sun-stone.png',
+        'Escama Dragón': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dragon-scale.png',
+        'Roca del Rey': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/kings-rock.png',
+        'Mejora': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/up-grade.png',
+        'Revestimiento metálico': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/metal-coat.png',
+        'Piedra Sinnoh': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/shiny-stone.png',
+        'Piedra Teselia': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dusk-stone.png',
+        'Módulo Cebo Glaciar': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/icy-rock.png',
+        'Módulo Cebo Musgoso': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/mossy-rock.png',
+        'Módulo Cebo Magnético': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/magnet.png',
+        'Módulo Cebo Lluvioso': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/damp-rock.png',
+        'Intercambio': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/link-cable.png',
+        'Aventura': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png', // Como no hay imagen oficial, usamos la Poké Ball
+        // Agrega más objetos si es necesario
+      };
+      return itemImageMap[itemName] || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
     }
 
     function showQuests() {
@@ -341,4 +628,5 @@
   </script>
 </body>
 </html>
+
 
